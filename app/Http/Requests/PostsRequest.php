@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FilterRequest extends FormRequest
+class PostsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,7 @@ class FilterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => '',
-            'description' => '',
-            'url' => '',
+            'filter' => ''
         ];
     }
 }
