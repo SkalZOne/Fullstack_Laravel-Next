@@ -15,27 +15,27 @@ class PostController extends Controller
         $data = $request->validated();
 
 
-        switch (isset($data['filter'])) {
-            case "priceDesc":
-                $query = Post::orderBy('price', 'desc');
-                break;
-            case "priceAsc":
-                $query = Post::orderBy('price', 'asc');
-                break;
-            case "dateDesc":
-                $query = Post::orderBy('created_at', 'desc');
-                break;
-            case "dateAsc":
-                $query = Post::orderBy('created_at', 'asc');
-                break;
-            default:
-                $query = Post::query();
-                break;
+        if (isset($data['filter'])) {
+            switch (true) {
+                case $data['filter'] == "priceDesc":
+                    $query = Post::orderBy('price', 'desc');
+                    break;
+                case $data['filter'] == "priceAsc":
+                    $query = Post::orderBy('price', 'asc');
+                    break;
+                case $data['filter'] == "dateDesc":
+                    $query = Post::orderBy('created_at', 'desc');
+                    break;
+                case $data['filter'] == "dateAsc":
+                    $query = Post::orderBy('created_at', 'asc');
+                    break;
+            }
         }
+
+        $query = Post::query();
 
         $posts = $query->paginate(10)->all();
 
         return PostsResource::collection($posts);
     }
-
 }
