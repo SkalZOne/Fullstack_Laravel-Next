@@ -22,7 +22,8 @@ class SinglePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'filter' => ''
+            'title' => '',
+            'fields' => ''
         ];
     }
 }
