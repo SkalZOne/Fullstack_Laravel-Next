@@ -9,9 +9,16 @@ use App\Models\Post;
 class PostController extends Controller
 {
 
-    public function show() {
+    public function show(FilterRequest $request) {
         
-        dd(123);
+        $data = $request->validated();
+
+        dd($data);
+
+
+        $orders = Post::paginate(10);
+
+        return PostsResource::collection($orders);
     }
 
 }
