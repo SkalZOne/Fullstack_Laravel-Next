@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostsRequest;
+use App\Http\Requests\ManyPostsRequest;
+use App\Http\Requests\SinglePostRequest;
+use App\Http\Resources\ManyPostsResource;
 use App\Http\Resources\PostsResource;
+use App\Http\Resources\SinglePostResource;
 use App\Models\Post;
 
 class PostController extends Controller
 {
 
-    public function all(PostsRequest $request)
+    public function all(ManyPostsRequest $request)
     {
         $data = $request->validated();
 
@@ -33,10 +36,10 @@ class PostController extends Controller
         $query = Post::query();
         $posts = $query->paginate(10)->all();
 
-        return PostsResource::collection($posts);
+        return ManyPostsResource::collection($posts);
     }
 
-    public function single(PostsRequest $request)
+    public function single(SinglePostRequest $request)
     {
         $data = $request->validated();
 
@@ -60,6 +63,6 @@ class PostController extends Controller
         $query = Post::query();
         $posts = $query->paginate(10)->all();
 
-        return PostsResource::collection($posts);
+        return SinglePostResource::collection($posts);
     }
 }
