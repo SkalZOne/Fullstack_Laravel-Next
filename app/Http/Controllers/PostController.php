@@ -43,26 +43,10 @@ class PostController extends Controller
     {
         $data = $request->validated();
 
-        if (isset($data['filter'])) {
-            switch (true) {
-                case $data['filter'] == "priceDesc":
-                    $query = Post::orderBy('price', 'desc');
-                    break;
-                case $data['filter'] == "priceAsc":
-                    $query = Post::orderBy('price', 'asc');
-                    break;
-                case $data['filter'] == "dateDesc":
-                    $query = Post::orderBy('created_at', 'desc');
-                    break;
-                case $data['filter'] == "dateAsc":
-                    $query = Post::orderBy('created_at', 'asc');
-                    break;
-            }
-        }
-
         $query = Post::query();
-        $posts = $query->paginate(10)->all();
 
-        return SinglePostResource::collection($posts);
+        $post = $query->where('title', 'like', "%{$data['title']}%")->get();
+
+        return SinglePostResource::collection($post);
     }
 }
