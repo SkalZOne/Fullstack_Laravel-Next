@@ -19,6 +19,7 @@ class PostsResource extends JsonResource
             'title' => $this->title,
             'primary_photo' => $this->primary_photo,
             'price' => $this->price,
+            'date' => $this->created_at
         ];
 
 
