@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->string('url');
+            $table->string('primary_photo');
+            $table->string('secondary_photo');
+            $table->string('third_photo');
+            $table->integer('price');
             $table->timestamps();
         });
     }
