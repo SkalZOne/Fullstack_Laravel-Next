@@ -15,14 +15,39 @@ class SinglePostResource extends JsonResource
     public function toArray(Request $request): array
     {
 
-        return [
-            'title' => $this->title,
-            'primary_photo' => $this->primary_photo,
-            'price' => $this->price,
-            'date' => $this->created_at
-        ];
+        $data = $request->all();
 
-
+        if (isset($data['fields'][0]) && isset($data['fields'][1])) {
+            return [
+                'title' => $this->title,
+                'description' => $this->description,
+                'primary_photo' => $this->primary_photo,
+                'secondary_photo' => $this->secondary_photo,
+                'third_photo' => $this->third_photo,
+                'price' => $this->price,
+            ];
+        } else if (isset($data['fields'][0])) {
+            return [
+                'title' => $this->title,
+                'description' => $this->description,
+                'primary_photo' => $this->primary_photo,
+                'price' => $this->price,
+            ];
+        } else if (isset($data['fields'][1])) {
+            return [
+                'title' => $this->title,
+                'primary_photo' => $this->primary_photo,
+                'secondary_photo' => $this->secondary_photo,
+                'third_photo' => $this->third_photo,
+                'price' => $this->price,
+            ];
+        } else {
+            return [
+                'title' => $this->title,
+                'primary_photo' => $this->primary_photo,
+                'price' => $this->price,
+            ];
+        }
         // return parent::toArray($request);
     }
 }
