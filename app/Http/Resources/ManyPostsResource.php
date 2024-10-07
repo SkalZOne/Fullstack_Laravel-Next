@@ -18,8 +18,7 @@ class ManyPostsResource extends JsonResource
         return [
             'title' => $this->title,
             'primary_photo' => $this->primary_photo,
-            'price' => $this->price,
-            'date' => $this->created_at
+            'price' => $this->price
         ];
 
 
