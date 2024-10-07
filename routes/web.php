@@ -3,4 +3,5 @@
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PostController::class, 'show']);
+Route::get('/getAllPosts', [PostController::class, 'all']);
+Route::get('/getSinglePost', [PostController::class, 'single']);
