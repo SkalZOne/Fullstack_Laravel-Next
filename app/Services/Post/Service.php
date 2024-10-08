@@ -6,17 +6,17 @@ use App\Models\Post;
 
 class Service
 {
-    public function filter($data)
+    public function filter($data, $model)
     {
         switch (true) {
             case $data['filter'] == "priceDesc":
-                return Post::orderBy('price', 'desc');
+                return $model::orderBy('price', 'desc');
             case $data['filter'] == "priceAsc":
-                return Post::orderBy('price', 'asc');
+                return $model::orderBy('price', 'asc');
             case $data['filter'] == "dateDesc":
-                return Post::orderBy('created_at', 'desc');
+                return $model::orderBy('created_at', 'desc');
             case $data['filter'] == "dateAsc":
-                return Post::orderBy('created_at', 'asc');
+                return $model::orderBy('created_at', 'asc');
         }
     }
 

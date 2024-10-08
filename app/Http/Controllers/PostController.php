@@ -17,8 +17,9 @@ class PostController extends BaseController
     {
         $data = $request->validated();
 
+
         if (isset($data['filter'])) {
-            $query = $this->service->filter($data);
+            $query = $this->service->filter($data, Post::class);
         } else {
             $query = Post::query();
         }
