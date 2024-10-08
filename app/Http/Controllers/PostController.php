@@ -10,7 +10,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Validator;
 
-class PostController extends Controller
+class PostController extends BaseController
 {
 
     public function all(ManyPostsRequest $request)
@@ -18,23 +18,11 @@ class PostController extends Controller
         $data = $request->validated();
 
         if (isset($data['filter'])) {
-            switch (true) {
-                case $data['filter'] == "priceDesc":
-                    $query = Post::orderBy('price', 'desc');
-                    break;
-                case $data['filter'] == "priceAsc":
-                    $query = Post::orderBy('price', 'asc');
-                    break;
-                case $data['filter'] == "dateDesc":
-                    $query = Post::orderBy('created_at', 'desc');
-                    break;
-                case $data['filter'] == "dateAsc":
-                    $query = Post::orderBy('created_at', 'asc');
-                    break;
-            }
+            $query = $this->service->filter($data);
+        } else {
+            $query = Post::query();
         }
 
-        $query = Post::query();
         $posts = $query->paginate(10)->all();
 
         return ManyPostsResource::collection($posts);
@@ -63,19 +51,12 @@ class PostController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return [
-                'status' => 'Error',
-                'error_messages' => $validator->messages()->all()
-            ];
+            return $this->service->getValidationError($validator);
         } else {
             $create = Post::create($validator->getData());
+            $postId = $create->id;
 
-            $createdPostId = $create->id;
-
-            return [
-                'status' => 'Created',
-                'post_id' => $createdPostId
-            ];
+            return $this->service->getValidationSuccess($postId);
         }
     }
 }
