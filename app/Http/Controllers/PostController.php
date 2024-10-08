@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ManyPostsRequest;
 use App\Http\Requests\SinglePostRequest;
 use App\Http\Resources\ManyPostsResource;
-use App\Http\Resources\PostsResource;
 use App\Http\Resources\SinglePostResource;
 use App\Models\Post;
+use Illuminate\Http\Request;
+use Validator;
 
 class PostController extends Controller
 {
@@ -48,5 +49,33 @@ class PostController extends Controller
         $post = $query->where('title', 'like', "%{$data['title']}%")->get();
 
         return SinglePostResource::collection($post);
+    }
+
+    public function create(Request $request)
+    { 
+        $validator = Validator::make($request->all(), [
+            'title' => '',
+            'description' => '',
+            'primary_photo' => 'url|onlyOneUrl',
+            'secondary_photo' => 'url|onlyOneUrl',
+            'third_photo' => 'url|onlyOneUrl',
+            'price' => ''
+        ]);
+
+        if ($validator->fails()) {
+            return [
+                'status' => 'Error',
+                'error_messages' => $validator->messages()->all()
+            ];
+        } else {
+            $create = Post::create($validator->getData());
+
+            $createdPostId = $create->id;
+
+            return [
+                'status' => 'Created',
+                'post_id' => $createdPostId
+            ];
+        }
     }
 }

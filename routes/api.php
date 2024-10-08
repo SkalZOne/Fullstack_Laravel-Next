@@ -18,5 +18,5 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 Route::group(['namespace' => 'Post'], function() {
     Route::get('/getAllPosts', [PostController::class, 'all'])->middleware('jwt.auth');
     Route::get('/getSinglePost', [PostController::class, 'single'])->middleware('jwt.auth');
-    Route::post('/getSinglePost', [PostController::class, 'single'])->middleware('jwt.auth');
+    Route::post('/createPost', [PostController::class, 'create'])->middleware('jwt.auth');
 });

@@ -24,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
             if (!(substr_count($value, "//") >=  2)) {
                 return true;
             }
-        });
+        }, 'Field accept only one URL');
     }
 }
