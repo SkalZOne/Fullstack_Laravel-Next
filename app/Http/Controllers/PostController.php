@@ -40,12 +40,12 @@ class PostController extends BaseController
     public function create(Request $request)
     { 
         $validator = Validator::make($request->all(), [
-            'title' => '',
-            'description' => '',
+            'title' => 'required|max:200',
+            'description' => 'required|max:1000',
             'primary_photo' => 'url|onlyOneUrl',
             'secondary_photo' => 'url|onlyOneUrl',
             'third_photo' => 'url|onlyOneUrl',
-            'price' => ''
+            'price' => 'required'
         ]);
 
         if ($validator->fails()) {
