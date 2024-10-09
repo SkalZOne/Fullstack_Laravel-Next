@@ -12,21 +12,18 @@ use Validator;
 
 class PostController extends BaseController
 {
-
     public function all(ManyPostsRequest $request)
     {
         $data = $request->validated();
-
+        $posts = Post::query();
 
         if (isset($data['filter'])) {
-            $query = $this->service->filter($data, Post::class);
+            $query = $this->service->filter($data, $posts);
+            return ManyPostsResource::collection($query);
         } else {
-            $query = Post::query();
+            $query = $posts->paginate(10);
+            return ManyPostsResource::collection($query);
         }
-
-        $posts = $query->paginate(10)->all();
-
-        return ManyPostsResource::collection($posts);
     }
 
     public function single(SinglePostRequest $request)

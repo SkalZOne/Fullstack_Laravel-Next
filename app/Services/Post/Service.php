@@ -3,31 +3,34 @@
 
 namespace App\Services\Post;
 use App\Models\Post;
+use Illuminate\Database\Eloquent\Collection;
 
 class Service
 {
-    public function filter($data, $model)
+    public function filter($data, $posts)
     {
         switch (true) {
             case $data['filter'] == "priceDesc":
-                return $model::orderBy('price', 'desc');
+                return $posts->orderBy('price', 'desc')->paginate(10);
             case $data['filter'] == "priceAsc":
-                return $model::orderBy('price', 'asc');
+                return $posts->orderBy('price', 'asc')->paginate(10);
             case $data['filter'] == "dateDesc":
-                return $model::orderBy('created_at', 'desc');
+                return $posts->orderBy('created_at', 'desc')->paginate(10);
             case $data['filter'] == "dateAsc":
-                return $model::orderBy('created_at', 'asc');
+                return $posts->orderBy('created_at', 'asc')->paginate(10);
         }
     }
 
-    public function getValidationError($validator) {
+    public function getValidationError($validator)
+    {
         return [
             'status' => 'Error',
             'error_messages' => $validator->messages()->all()
         ];
     }
 
-    public function getValidationSuccess($postId) {
+    public function getValidationSuccess($postId)
+    {
         return [
             'status' => 'Created',
             'post_id' => $postId
