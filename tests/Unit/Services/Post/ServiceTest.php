@@ -34,4 +34,20 @@ class ServiceTest extends TestCase
 
         $this->assertLessThan($result[1]->price, $result[0]->price);
     }
+
+    public function test_filterDateDesc(): void
+    {
+        $createdPosts = Post::factory()->count(2)->create()->toQuery();
+        $result = $this->service->filter(['filter' => 'dateDesc'], $createdPosts)->all();
+
+        $this->assertGreaterThan($result[1]->price, $result[0]->price);
+    }
+
+    public function test_filterDateAsc(): void
+    {
+        $createdPosts = Post::factory()->count(2)->create()->toQuery();
+        $result = $this->service->filter(['filter' => 'dateAsc'], $createdPosts)->all();
+
+        $this->assertLessThan($result[1]->price, $result[0]->price);
+    }
 }
