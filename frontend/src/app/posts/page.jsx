@@ -69,18 +69,18 @@ const PostAll = () => {
             return (
               <ul
                 key={index}
-                className="flex flex-col text-center border border-t-indigo-600 shadow-xl rounded p-2 max-w-60"
+                className="text-center border border-t-indigo-600 shadow-xl rounded p-2 max-w-60"
               >
                 <li key={title} className="text-2xl">
                   {title}
                 </li>
                 <li
                   key={primary_photo}
-                  className="text-ellipsis overflow-hidden max-w-full"
+                  className="break-words overflow-hidden text-sm my-4"
                 >
                   {primary_photo}
                 </li>
-                <li key={price}>{price}</li>
+                <li key={price} className="text-green-700 font-bold">{price}</li>
               </ul>
             );
           })}
