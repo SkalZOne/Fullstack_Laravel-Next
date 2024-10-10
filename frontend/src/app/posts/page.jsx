@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Button from "../components/Button";
 
 const PostAll = () => {
   const [posts, setPosts] = useState(null);
@@ -41,7 +42,65 @@ const PostAll = () => {
             );
           })}
       </div>
+
+      <div className="flex justify-center items-center gap-14 my-16 mx-24">
+        <Button
+          disabled={posts && currentPage == 1 ? true : false}
+          onClick={() => {
+            setCurrentPage(currentPage - 1);
+          }}
+        >
+          Previous page
+        </Button>
+
+        <div className="flex gap-4">
+          {posts &&
+            posts.meta.links.map(({ active, label }, index) => {
+              if (label == "&laquo; Previous" || label == "Next &raquo;") {
+                return;
+              }
+
+              if (active == true) {
+                return (
+                  <span
+                    key={index}
+                    className="flex justify-center items-center text-white text-center bg-indigo-600 border border-indigo-600 min-w-7 max-h-7 cursor-pointer rounded-full transition-colors hover:bg-white hover:text-black"
+                    onClick={() => {
+                      setCurrentPage(index);
+                    }}
+                  >
+                    {index}
+                  </span>
+                );
+              }
+
+              return (
+                <span
+                  key={index}
+                  className="flex justify-center items-center text-black text-center bg-white border border-indigo-600 min-w-7 max-h-7 cursor-pointer rounded-full transition-colors hover:bg-indigo-600 hover:text-white"
+                  onClick={() => {
+                    console.log(currentPage);
+                    setCurrentPage(index);
+                    console.log(currentPage);
+                  }}
+                >
+                  {index}
+                </span>
+              );
+            })}
+        </div>
+
+        <Button
+          disabled={posts && currentPage == posts.meta.last_page ? true : false}
+          onClick={() => {
+            setCurrentPage(currentPage + 1);
+          }}
+        >
+          Next page
+        </Button>
+      </div>
     </div>
-)}
+  );
+};
 
 export default PostAll;
