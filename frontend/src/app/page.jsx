@@ -1,16 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Button from "../components/Button";
-import Arrow from "../images/Arrow";
-import Minus from "../images/Minus";
-import Input from "../components/Input";
+import Button from "./components/Button";
+import Arrow from "./images/Arrow";
+import Minus from "./images/Minus";
+import Plus from "./images/Plus";
+import Input from "./components/Input";
+import Link from "next/link";
 
 const PostAll = () => {
   const [posts, setPosts] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [filter, setFilter] = useState("");
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState("");
 
   const fetchData = async () => {
     if (search == "") {
@@ -28,7 +30,6 @@ const PostAll = () => {
 
   useEffect(() => {
     fetchData();
-    console.log(search)
   }, [currentPage, filter, search]);
 
   const setFilterPrice = () => {
@@ -52,18 +53,18 @@ const PostAll = () => {
   };
 
   const getFilterImage = (desc, asc) => {
-    if (filter == desc) return <Arrow className="ml-2"/>;
-    if (filter == asc) return <Arrow className="rotate-180 ml-2"/>;
+    if (filter == desc) return <Arrow className="ml-2" />;
+    if (filter == asc) return <Arrow className="rotate-180 ml-2" />;
     return <Minus className="ml-2" />;
   };
 
   const setSearchInput = (event) => {
-    setSearch(event.target.value)
-  }
+    setSearch(event.target.value);
+  };
 
   return (
     <div>
-      <div className="flex justify-center gap-10 mt-4 mb-10">
+      <div className="flex justify-center items-center gap-10 mt-4 mb-10">
         <Button onClick={() => setFilter("")}>Clear filters</Button>
 
         <Button onClick={() => setFilterPrice()}>
@@ -77,6 +78,8 @@ const PostAll = () => {
         </Button>
 
         <Input placeholder="Search post" onChange={setSearchInput}></Input>
+
+        <Link href="/create_post" className="uppercase border-indigo-700 border-b">Create post</Link>
       </div>
       <div className="grid gap-10 grid-cols-5 mx-3">
         {posts &&
@@ -86,16 +89,16 @@ const PostAll = () => {
                 key={index}
                 className="text-center border border-t-indigo-600 shadow-xl rounded p-2 max-w-60"
               >
-                <li key={title} className="text-2xl">
+                <li key={index + 'title'} className="text-2xl">
                   {title}
                 </li>
                 <li
-                  key={primary_photo}
+                  key={index + 'photo'}
                   className="break-words overflow-hidden text-sm my-4"
                 >
                   {primary_photo}
                 </li>
-                <li key={price} className="text-green-700 font-bold">
+                <li key={index + 'price'} className="text-green-700 font-bold">
                   {price}
                 </li>
               </ul>
