@@ -25,6 +25,7 @@ class SinglePostResource extends JsonResource
                 'secondary_photo' => $this->secondary_photo,
                 'third_photo' => $this->third_photo,
                 'price' => $this->price,
+                'date' => $this->created_at
             ];
         } else if (isset($data['fields'][0])) {
             return [
@@ -32,6 +33,7 @@ class SinglePostResource extends JsonResource
                 'description' => $this->description,
                 'primary_photo' => $this->primary_photo,
                 'price' => $this->price,
+                'date' => $this->created_at
             ];
         } else if (isset($data['fields'][1])) {
             return [
@@ -40,12 +42,14 @@ class SinglePostResource extends JsonResource
                 'secondary_photo' => $this->secondary_photo,
                 'third_photo' => $this->third_photo,
                 'price' => $this->price,
+                'date' => $this->created_at
             ];
         } else {
             return [
                 'title' => $this->title,
                 'primary_photo' => $this->primary_photo,
                 'price' => $this->price,
+                'date' => $this->created_at
             ];
         }
         // return parent::toArray($request);
