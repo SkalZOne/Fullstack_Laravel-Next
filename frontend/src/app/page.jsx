@@ -82,8 +82,9 @@ const PostAll = () => {
         <Link href="/create_post" className="uppercase border-indigo-700 border-b">Create post</Link>
       </div>
       <div className="grid gap-10 grid-cols-5 mx-3">
+        {console.log(posts)}
         {posts &&
-          posts.data.map(({ title, primary_photo, price }, index) => {
+          posts.data.map(({ title, primary_photo, price, date }, index) => {
             return (
               <ul
                 key={index}
@@ -98,8 +99,11 @@ const PostAll = () => {
                 >
                   {primary_photo}
                 </li>
-                <li key={index + 'price'} className="text-green-700 font-bold">
-                  {price}
+                <li key={index + 'price'}>
+                  Price: <span className="text-green-700 font-bold">{price}</span>
+                </li>
+                <li key={index + 'date'}>
+                  Date: <span className="font-bold">{date}</span>
                 </li>
               </ul>
             );
